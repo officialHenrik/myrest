@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import os
 
 app = Flask(__name__)
@@ -18,9 +18,15 @@ batch = [
 }
 ]
 
-@app.route("/")
+hello_word = 'world'
+
+@app.route("/todo/api/v1.0/hello", methods=['GET'])
 def hello():
-    return "Hello World!"
+    global hello_word
+    tmp = request.args.get('word')
+    if tmp:
+        hello_word = tmp
+    return "Hello " + hello_word + " !"
 
 @app.route('/todo/api/v1.0/sensors', methods=['GET'])
 def get_sensor_readings():
