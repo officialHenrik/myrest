@@ -32,14 +32,14 @@ def hello():
     return "Hello " + hello_word + " !"
 
 # curl 127.0.0.1:5000/api/v1.0/sensors
-# curl 127.0.0.1:5000/api/v1.0/sensors?id=§
+# curl 127.0.0.1:5000/api/v1.0/sensors?id=1
 @app.route('/api/v1.0/sensors', methods=['GET'])
 def get_sensor_readings():
     
-    id = int(request.args.get('id'))
+    id = request.args.get('id')
     if not id:
         return jsonify({'batch': batch})
-    idx = id-1
+    idx = int(id)-1
     if len(batch) > idx:
         return str(batch[idx]["value"])
     else:
@@ -59,4 +59,4 @@ if __name__ == '__main__':
     x.daemon = True
     x.start()
     
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='10.44.18.33', port=5000)
