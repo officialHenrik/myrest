@@ -39,7 +39,11 @@ def get_sensor_readings():
     id = request.args.get('id')
     if not id:
         return jsonify({'batch': batch})
-    idx = int(id)-1
+    try:
+        idx = int(id)-1
+    except ValueError:
+        return "INVALID INDEX"
+        
     if len(batch) > idx:
         return str(batch[idx]["value"])
     else:
