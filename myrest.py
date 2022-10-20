@@ -59,4 +59,4 @@ if __name__ == '__main__':
     x.daemon = True
     x.start()
     
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
