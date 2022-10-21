@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-  <meta charset="utf-8" />
-  <title>Hello world!</title>
-  <link type="text/css" rel="stylesheet"
-        href="{{ url_for('static',
-              filename='hello.css')}}" />
-      <meta http-equiv="refresh" content="0.1">
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <title>Sine Zone</title>
+  <meta http-equiv="refresh" content="0.1">
+  <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+        font-size: min(50vh, 50vh);
+        line-height: 50vh;
+        text-align: center;
+      }
+    </style>
+
 </head>
 <body>
-      <center>
-            <span style='font-size:500px;'>&infin;</span><br>
-      </center>
-      <span style='font-size:100px;'>Current sine value: {{sine_val}}</span><br>
+      <span style='font-size:35px;'>Current sine value: {{sine_val}}</span><br>
+      <h1>&infin;</h1>
 </body>
 </html>
