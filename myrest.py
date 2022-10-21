@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import os, threading, time
 import numpy as np
+import random
 
 app = Flask(__name__)
 
@@ -20,6 +21,7 @@ batch = [
 ]
 
 hello_word = 'world'
+sine_gain = 100
 
 # curl 127.0.0.1:5000/api/v1.0/hello?word=fjant
 # curl 127.0.0.1:5000/api/v1.0/hello
@@ -47,14 +49,37 @@ def get_sensor_readings():
     if len(batch) > idx:
         return str(batch[idx]["value"])
     else:
-        return "INVALID INDEX"
+        return "INVALID INDEX" 
+    
+# curl 127.0.0.1:5000/api/v1.0/sine?gain=100
+@app.route('/api/v1.0/sine', methods=['GET'])
+def set_sine_gain():
+    global sine_gain
+    
+    gain = request.args.get('gain')
+    if gain:
+        g = gain
+    else: 
+        return "INVALID GAIN"
+    try:
+        g = int(g)
+    except ValueError:
+        return "INVALID GAIN"
+    
+    sine_gain = g
+    return "Sine gain: " + str(sine_gain)
+
+# Retrieve the home page for the app
+@app.route("/", methods=["GET"])
+def index():
+    return render_template("index.html", sine_val=batch[1]["value"])
 
 # Fake sensor
 def sensor_sampler():
     while 1:
         batch[0]["value"]+=0.01
         x = batch[0]["value"]
-        batch[1]["value"]=np.sin(x)*100
+        batch[1]["value"]=np.sin(x)*sine_gain
         time.sleep(0.1)
 
 if __name__ == '__main__':
